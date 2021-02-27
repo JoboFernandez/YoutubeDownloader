@@ -19,17 +19,18 @@ class Downloader():
         driver = webdriver.Chrome(executable_path="C://Program Files (x86)/chromedriver.exe")
         self.update_user()
         driver.get(converter)
-        driver.find_element_by_id("videoURL").send_keys(youtube_url)
+        driver.find_element_by_id("input").send_keys(youtube_url)
         self.dilly_dally(1)
         self.update_user()
-        driver.find_element_by_name("submitForm").click()
+        driver.find_element_by_class_name("btn-dark").click()
         self.dilly_dally(1)
         driver.switch_to.window(driver.window_handles[-1])
         driver.close()
         driver.switch_to.window(driver.window_handles[-1])
         while True:
             try:
-                success = driver.find_element_by_xpath("//*[@id='conversionSuccess']/p[4]/a")
+                # success = driver.find_element_by_xpath("//*[@id='conversionSuccess']/p[4]/a")
+                success = driver.find_elements_by_class_name("btn-dark")[1]
                 success.click()
                 break
             except:
