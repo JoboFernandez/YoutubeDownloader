@@ -95,7 +95,7 @@ class Ui_win_main(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(win_main)
-        default_directory = "C:\\Users\\Jobo Fernandez\\Downloads"
+        default_directory = os.path.join(os.path.expanduser("~"), "Downloads")
         self.txt_filepath.setText(default_directory)
         QtCore.QMetaObject.connectSlotsByName(win_main)
 
@@ -125,7 +125,7 @@ class Ui_win_main(object):
         self.btn_deletequeue.clicked.connect(self.btn_deletequeue_click)
 
     def btn_addtoqueue_click(self):
-        self.btn_addtoqueue.setEnabled(False)
+        # self.btn_addtoqueue.setEnabled(False)
 
         global files
         ytdurl = self.txt_ytdurl.text()
@@ -133,7 +133,7 @@ class Ui_win_main(object):
         filename = self.txt_filename.text() + fileextension
         filepath = self.txt_filepath.text()
 
-        self.update_status(filename, 5, "Checking for file duplicates")
+        # self.update_status(filename, 5, "Checking for file duplicates")
         if self.file_isDuplicated(ytdurl, filepath, filename):
             pass
         else:
@@ -141,19 +141,19 @@ class Ui_win_main(object):
             self.txt_queue.addItem(filename)
             self.clear_inputs()
 
-        self.update_status(filename, 15, "Downloading...")
+        # self.update_status(filename, 15, "Downloading...")
         downloader = ytd_crawler.Downloader()
         if self.rdb_mp3.isChecked():
             downloader.download_to_mp3(ytdurl)
-            self.update_status(filename, 95, "Renaming...")
+            # self.update_status(filename, 95, "Renaming...")
             for file in os.listdir(filepath):
-                if "[Youtubetomp3.sc]" in file:
+                if "kbps" in file:
                     os.chdir(filepath)
                     os.rename(file, filename)
                     break
             
-        self.update_status(filename, 0, "")
-        self.btn_addtoqueue.setEnabled(True)
+        # self.update_status(filename, 0, "")
+        # self.btn_addtoqueue.setEnabled(True)
         
         
     
